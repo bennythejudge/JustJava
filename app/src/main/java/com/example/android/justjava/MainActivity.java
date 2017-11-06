@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
-
 import java.text.NumberFormat;
 
 /**
@@ -29,12 +28,25 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
-        int number_of_coffees = 10;
+        int quantity = 2;
         int unit_price = 2;
-        display(number_of_coffees);
-        displayPrice(number_of_coffees * unit_price);
+        display(quantity);
+        displayPrice(quantity * unit_price);
     }
 
+    public void increment(View view) {
+        int quantity = 2;
+        quantity++;
+        display(quantity);
+    }
+
+    public void decrement(View view) {
+        int quantity = 1;
+        if (quantity > 0) {
+            quantity--;
+        }
+        display(quantity);
+    }
 
     /**
      * This method displays the given quantity value on the screen.
