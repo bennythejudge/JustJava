@@ -29,10 +29,11 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
-        display(1+1);
-        displayPrice( 2*2);
+        int number_of_coffees = 10;
+        int unit_price = 2;
+        display(number_of_coffees);
+        displayPrice(number_of_coffees * unit_price);
     }
-
 
 
     /**
