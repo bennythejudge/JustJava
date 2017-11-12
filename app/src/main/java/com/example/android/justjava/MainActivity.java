@@ -18,34 +18,36 @@ import java.text.NumberFormat;
  */
 public class MainActivity extends AppCompatActivity {
 
+    int quantity = 0;
+    int unit_price = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
 
+
     /**
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
-        int quantity = 2;
-        int unit_price = 2;
         display(quantity);
         displayPrice(quantity * unit_price);
     }
 
     public void increment(View view) {
-        int quantity = 2;
         quantity++;
         display(quantity);
+        displayPrice(quantity * unit_price);
     }
 
     public void decrement(View view) {
-        int quantity = 1;
         if (quantity > 0) {
             quantity--;
         }
         display(quantity);
+        displayPrice(quantity * unit_price);
     }
 
     /**
