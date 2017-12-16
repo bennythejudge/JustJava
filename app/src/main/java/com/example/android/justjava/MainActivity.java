@@ -9,7 +9,9 @@ package com.example.android.justjava;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import java.text.NumberFormat;
 
@@ -28,20 +30,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     /**
      * This method is called when the order button is clicked.
      */
+    private int calculatePrice(int quantity, int unit_price) {
+        return quantity * unit_price;
+    }
+
+    private String createOrderSummary(int unit_price, int quantity, boolean hasTopping) {
+
+        String topping =  (hasTopping) ? "With Topping\n" : "";
+
+        return "Name: Mr. Wolf\n" +
+               topping +
+                "Quantity: " + quantity + "\n" +
+                "Total: " + calculatePrice(quantity, unit_price) + "\n" +
+                "Thank you!";
+    }
+
+
     public void submitOrder(View view) {
-        String priceMessage = "That would be $" + (quantity * unit_price) + " for " + quantity +
-                " coffees, please.";
-        // display(quantity);
+
+        boolean hasTopping = ((CheckBox) findViewById(R.id.add_topping)).isChecked();
+
+        Log.d("submitOrder", "Checkbox: " + hasTopping);
+
+
+        String priceMessage = createOrderSummary(unit_price, quantity, hasTopping);
+        int price = calculatePrice(quantity, unit_price);
+        Log.v("MainActivity", "The price is: " + price);
         displayMessage(priceMessage);
     }
 
     public void increment(View view) {
         quantity++;
         display(quantity);
-        displayPrice(quantity * unit_price);
+//        displayPrice(quantity * unit_price);
     }
 
     public void decrement(View view) {
@@ -49,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             quantity--;
         }
         display(quantity);
-        displayPrice(quantity * unit_price);
+//        displayPrice(quantity * unit_price);
     }
 
     /**
@@ -61,15 +86,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayMessage(String message) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        priceTextView.setText(message);
+        TextView orderSummaryTextView = (TextView) findViewById(R.id.order_summary_text_view);
+        orderSummaryTextView.setText(message);
     }
 
     /**
      * This method displays the given price on the screen.
+     * Udacity wants me to delete this because they don't update the price in real time
+     * as the quantity changes
      */
-    private void displayPrice(int number) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
-    }
+//    private void displayPrice(int number) {
+//        TextView priceTextView = (TextView) findViewById(R.id.order_summary_text_view);
+//        priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
+//    }
 }
