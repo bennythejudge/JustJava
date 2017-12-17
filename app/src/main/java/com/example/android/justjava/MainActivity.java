@@ -38,12 +38,15 @@ public class MainActivity extends AppCompatActivity {
         return quantity * unit_price;
     }
 
-    private String createOrderSummary(int unit_price, int quantity, boolean hasTopping) {
+    private String createOrderSummary(int unit_price, int quantity, boolean hasWhippedCream,
+                                      boolean hasChocolate) {
 
-        String topping =  (hasTopping) ? "With Topping\n" : "";
+        String whippedcream =  (hasWhippedCream) ? "With Whipped Cream on Top\n" : "";
+        String chocolate =  (hasChocolate) ? "With Chocolate\n" : "";
 
         return "Name: Mr. Wolf\n" +
-               topping +
+                whippedcream +
+                chocolate +
                 "Quantity: " + quantity + "\n" +
                 "Total: " + calculatePrice(quantity, unit_price) + "\n" +
                 "Thank you!";
@@ -52,12 +55,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void submitOrder(View view) {
 
-        boolean hasTopping = ((CheckBox) findViewById(R.id.add_topping)).isChecked();
+        boolean hasWhippedCream = ((CheckBox) findViewById(R.id.whipped_cream)).isChecked();
+        boolean hasChocolate = ((CheckBox) findViewById(R.id.chocolate)).isChecked();
 
-        Log.d("submitOrder", "Checkbox: " + hasTopping);
+        Log.d("submitOrder", "whipped cream: " + hasWhippedCream + " chocolate: " +
+                hasChocolate);
 
+        String priceMessage = createOrderSummary(unit_price, quantity, hasWhippedCream,
+                hasChocolate );
 
-        String priceMessage = createOrderSummary(unit_price, quantity, hasTopping);
         int price = calculatePrice(quantity, unit_price);
         Log.v("MainActivity", "The price is: " + price);
         displayMessage(priceMessage);
