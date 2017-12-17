@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">JustJava</string>
+    <string name="customer_name">Type the customer name here...</string>
 </resources>

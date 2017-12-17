@@ -12,7 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.text.NumberFormat;
 
 /**
@@ -29,26 +32,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-
-
     /**
      * This method is called when the order button is clicked.
      */
-    private int calculatePrice(int quantity, int unit_price) {
-        return quantity * unit_price;
+    private int calculatePrice(int quantity, int unit_price, boolean withWhippedCream,
+                               boolean withChcolate) {
+        int tot = 0;
+        tot = tot + ((withChcolate) ? 1 : 0);
+        tot = tot + ((withWhippedCream) ? 1 : 0);
+
+        return (quantity * unit_price) + tot;
     }
 
     private String createOrderSummary(int unit_price, int quantity, boolean hasWhippedCream,
-                                      boolean hasChocolate) {
+                                      boolean hasChocolate, String customerName) {
 
         String whippedcream =  (hasWhippedCream) ? "With Whipped Cream on Top\n" : "";
         String chocolate =  (hasChocolate) ? "With Chocolate\n" : "";
 
-        return "Name: Mr. Wolf\n" +
+        return customerName + "\n" +
                 whippedcream +
                 chocolate +
                 "Quantity: " + quantity + "\n" +
-                "Total: " + calculatePrice(quantity, unit_price) + "\n" +
+                "Total: " + calculatePrice(quantity, unit_price, hasWhippedCream, hasChocolate) +
+                "\n" +
                 "Thank you!";
     }
 
@@ -57,30 +64,37 @@ public class MainActivity extends AppCompatActivity {
 
         boolean hasWhippedCream = ((CheckBox) findViewById(R.id.whipped_cream)).isChecked();
         boolean hasChocolate = ((CheckBox) findViewById(R.id.chocolate)).isChecked();
+        String customerName = ((EditText) findViewById(R.id.customer_name)).getText().toString();
 
         Log.d("submitOrder", "whipped cream: " + hasWhippedCream + " chocolate: " +
                 hasChocolate);
+        Log.d("submitOrder", "customer name: " + customerName);
 
         String priceMessage = createOrderSummary(unit_price, quantity, hasWhippedCream,
-                hasChocolate );
+                hasChocolate, customerName );
 
-        int price = calculatePrice(quantity, unit_price);
-        Log.v("MainActivity", "The price is: " + price);
         displayMessage(priceMessage);
     }
 
     public void increment(View view) {
-        quantity++;
+        if (quantity<100) {
+            quantity++;
+        } else {
+            Toast.makeText(this, "Dude, too much coffee will drive you crazy!",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         display(quantity);
-//        displayPrice(quantity * unit_price);
     }
 
     public void decrement(View view) {
         if (quantity > 0) {
             quantity--;
+        } else {
+            Toast.makeText(this, "Dude, order something!", Toast.LENGTH_SHORT).show();
+            return;
         }
         display(quantity);
-//        displayPrice(quantity * unit_price);
     }
 
     /**
