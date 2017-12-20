@@ -1,0 +1,9 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Seulment Java</string>
+    <string name="customer_name">Ecrir le nom du client SVP...</string>
+    <string name="toppings">Sur la tete</string>
+    <string name="topping_whipped_cream">Avec crème fouettée</string>
+    <string name="quantity_string">Quantité</string>
+    <string name="thankyou">Merci</string>
+    <string name="order_summary_price">"TotalFR: <xliff:g id="price" example="$10">%s</xliff:g>     "</string>
+</resources>

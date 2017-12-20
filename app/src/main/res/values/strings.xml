@@ -1,4 +1,19 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Application name [CHAR LIMIT=12] -->
     <string name="app_name">JustJava</string>
+
+    <!-- Hint in the customer name field [CHAR LIMIT=20] -->
     <string name="customer_name">Type the customer name here...</string>
+
+    <string name="toppings">Toppings</string>
+    <string name="topping_whipped_cream">Add Whipped cream</string>
+    <string name="quantity_string">Quantity</string>
+    <string name="thankyou">Thanks!</string>
+
+    <!--
+     Total price for the order summary. It will be shown in the format of
+     "Total: $10" where $10 is the price. [CHAR LIMIT=NONE]
+    -->
+    <string name="order_summary_price">Total: <xliff:g id="price" example="$10">%s</xliff:g>
+    </string>
 </resources>

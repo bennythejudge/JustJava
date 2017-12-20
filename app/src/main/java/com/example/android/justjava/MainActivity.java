@@ -7,6 +7,8 @@
  */
 package com.example.android.justjava;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -47,18 +49,21 @@ public class MainActivity extends AppCompatActivity {
     private String createOrderSummary(int unit_price, int quantity, boolean hasWhippedCream,
                                       boolean hasChocolate, String customerName) {
 
-        String whippedcream =  (hasWhippedCream) ? "With Whipped Cream on Top\n" : "";
+        String whippedcream =  (hasWhippedCream) ? getString(R.string.topping_whipped_cream) + "\n" : "";
         String chocolate =  (hasChocolate) ? "With Chocolate\n" : "";
+        int price = calculatePrice(quantity, unit_price, hasWhippedCream, hasChocolate);
 
         return customerName + "\n" +
                 whippedcream +
                 chocolate +
-                "Quantity: " + quantity + "\n" +
-                "Total: " + calculatePrice(quantity, unit_price, hasWhippedCream, hasChocolate) +
-                "\n" +
-                "Thank you!";
-    }
+                getString(R.string.quantity_string) + ": " + quantity + "\n" +
 
+                getString(
+                        R.string.order_summary_price,
+                        NumberFormat.getCurrencyInstance().format(price)) +
+                "\n" +
+                getString(R.string.thankyou);
+    }
 
     public void submitOrder(View view) {
 
@@ -73,7 +78,22 @@ public class MainActivity extends AppCompatActivity {
         String priceMessage = createOrderSummary(unit_price, quantity, hasWhippedCream,
                 hasChocolate, customerName );
 
-        displayMessage(priceMessage);
+//        Intent mapIntent = new Intent(Intent.ACTION_VIEW);
+//        mapIntent.setData(Uri.parse("geo:47.6, -122.3"));
+//
+//        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+//            startActivity(mapIntent);
+//        }
+
+
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" +
+                "logube@gmail.com"));
+        String subject = "JustJava coffee order for " + customerName;
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, priceMessage);
+        if (emailIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(emailIntent);
+        }
     }
 
     public void increment(View view) {
